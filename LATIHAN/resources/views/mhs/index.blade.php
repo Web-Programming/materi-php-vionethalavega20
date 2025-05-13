@@ -1,3 +1,5 @@
-<div>
-    <!-- An unexamined life is not worth living. - Socrates -->
-</div>
+@extends('layouts.master')
+
+@section('content')
+    <h1>Halaman Index - Mahasiswa</h1>
+@endsection

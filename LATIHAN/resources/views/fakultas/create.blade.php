@@ -1,3 +1,5 @@
-<div>
-    <!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
-</div>
+@extends('layouts.master')
+
+@section('content')
+    <h1>Halaman Create - Fakultas</h1>
+@endsection

@@ -1,3 +1,5 @@
-<div>
-    <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
-</div>
+@extends('layouts.master')
+
+@section('content')
+    <h1>Halaman Create - Mahasiswa</h1>
+@endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+// controller yang memiliki fungsi lengkap
 class FakultasController extends Controller
 {
     /**
@@ -58,6 +59,7 @@ class FakultasController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    // fungsi menghandle proses penghapusan data 
     {
         //
     }

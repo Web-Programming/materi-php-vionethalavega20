@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //membuat tabel mahasiswas
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id(); //pk, ai, biginteger(20)
             $table->char('npm', 11)->unique();
@@ -20,6 +21,8 @@ return new class extends Migration
             $table->timestamps(); //created_at, updated_at
         });
     }
+    //kalau mau mengubah tabel, kita harus membuat migration baru
+    //kalau mau buat langsung di sql workbench bisa aja, tapi kita tidak tau kalau tabel itu berubah siapa yang ubah
 
     /**
      * Reverse the migrations.

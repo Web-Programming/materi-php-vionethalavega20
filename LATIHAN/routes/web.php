@@ -22,6 +22,8 @@ Route::get('/berita/{id}/{judul?}', function($id, $judul = null){
 });
 
 //membuat route ke halam prodi index melalui controller ProdiController
-//Route::get('/prodi/index', [ProdiController::class,'index']);
+Route::get('/prodi/index', [ProdiController::class,'index']);
 
 Route::resource('prodi', ProdiController::class);
+Route::get('/prodi/create', [ProdiController::class,'create']);
+

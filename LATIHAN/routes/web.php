@@ -10,8 +10,8 @@ Route::get('/', function () {
 Route::get('/home', function(){
     return view('beranda', 
     [
-            'name' => 'Nur Rachmat',
-            'email' => 'nurrachmat@gmail.com',
+            'name' => 'Vionetha Lavega',
+            'email' => 'vionetha2085@gmail.com',
             'alamat' => 'Palembang'
         ]
     );

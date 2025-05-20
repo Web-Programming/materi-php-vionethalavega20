@@ -26,4 +26,4 @@ Route::get('/prodi/index', [ProdiController::class,'index']);
 
 Route::resource('prodi', ProdiController::class);
 Route::get('/prodi/create', [ProdiController::class,'create']);
-
+Route::get('prodi/{id}', [ProdiController::class, 'show']);

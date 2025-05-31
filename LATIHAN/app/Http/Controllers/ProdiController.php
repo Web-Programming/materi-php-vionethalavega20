@@ -13,9 +13,10 @@ class ProdiController extends Controller
     public function index()
     {
         $listprodi = Prodi::get();
-        return view("prodi.index", [
-            'listprodi' => $listprodi
-        ]);
+        return view(
+            "prodi.index",
+            ['listprodi' => $listprodi]
+        );
     }
 
     /**
@@ -31,24 +32,31 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'nama' => 'required|min:5|max:20',
-            'kode_prodi' => 'required|min:2|max:2'
-            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-        ]);
+        $validateData = $request->validate(
+            [
+                'nama' => 'required|min:5|max:20',
+                'kode_prodi' => 'required|min:2|max:2',
+                'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]
+        );
 
         $prodi = new Prodi();
-        $prodi->nama = $validateData['nama'];
+        $prodi->nama = $validateData['nama']; //$request->nama
         $prodi->kode_prodi = $validateData['kode_prodi'];
         //upload logo
         if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
+            $file = $request->file(key: 'logo');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);
             $prodi->logo = $filename;
         }
 
         $prodi->save();
+
+        //Prodi::create([
+        //    'nama' =>  $validateData['nama'],
+        //    'kode_prodi' => $validateData['kode_prodi']
+        //]);
 
         return redirect("prodi")->with("status", "Data Program Studi berhasil disimpan!");
     }
@@ -58,9 +66,11 @@ class ProdiController extends Controller
      */
     public function show(string $id)
     {
+        //select prodi by id
         $prodi = Prodi::find($id);
-        return view("prodi.detail", ['prodi' => $prodi]);
 
+        //buat view detail di folder view/prodi
+        return view("prodi.detail", ['prodi' => $prodi]);
     }
 
     /**
@@ -68,10 +78,14 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
-        $prodi = Prodi::findOrFail($id);
-        return view("prodi.edit", [
-            'prodi' => $prodi
-        ]);
+        //select prodi by id
+        $prodi = Prodi::find($id);
+
+        //buat view edit di folder view/prodi
+        return view(
+            "prodi.edit",
+            ['prodi' => $prodi]
+        );
     }
 
     /**
@@ -79,17 +93,20 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validateData = $request->validate([
-            'nama' => 'required|min:5|max:20',
-            'kode_prodi' => 'required|min:2|max:2'
-        ]);
+        $validateData = $request->validate(
+            [
+                'nama' => 'required|min:5|max:20',
+                'kode_prodi' => 'required|min:2|max:2'
+            ]
+        );
 
-        $prodi = Prodi::findOrFail($id); //ambil data prodi berdasarkan id
+        $prodi = Prodi::find($id); //ambil data prodi berdasarkan id
         $prodi->nama = $validateData['nama']; //$request->nama
         $prodi->kode_prodi = $validateData['kode_prodi'];
         $prodi->save();
 
-        return redirect("prodi")->with("status", "Data program studi berhasil diupdate!");
+        return redirect("prodi")
+            ->with("status", "Data Program Studi berhasil diupdate!");
     }
 
     /**
@@ -97,9 +114,10 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
-        $prodi = Prodi::findOrFail($id);
+        //ambil data prodi berdasarkan id
+        $prodi = Prodi::find($id);
+        //hapus data prodi
         $prodi->delete();
-        return redirect("prodi")->with("status", "Data program studi berhasil dihapus!");
+        return redirect("prodi")->with("status", "Data Program Studi berhasil dihapus!");
     }
 }
-

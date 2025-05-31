@@ -12,6 +12,8 @@ class ProdiController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Prodi::class);
+    
         $listprodi = Prodi::get();
         return view(
             "prodi.index",
@@ -24,6 +26,7 @@ class ProdiController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Prodi::class);
         return view("prodi.create");
     }
 
@@ -66,6 +69,7 @@ class ProdiController extends Controller
      */
     public function show(string $id)
     {
+        Gate::authorize('view', Prodi::class);
         //select prodi by id
         $prodi = Prodi::find($id);
 
@@ -78,6 +82,7 @@ class ProdiController extends Controller
      */
     public function edit(string $id)
     {
+        Gate::authorize( 'update', Prodi::class);
         //select prodi by id
         $prodi = Prodi::find($id);
 
@@ -93,6 +98,7 @@ class ProdiController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Gate::authorize( 'update', Prodi::class);
         $validateData = $request->validate(
             [
                 'nama' => 'required|min:5|max:20',
@@ -114,6 +120,7 @@ class ProdiController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize( 'delete', Prodi::class);
         //ambil data prodi berdasarkan id
         $prodi = Prodi::find($id);
         //hapus data prodi

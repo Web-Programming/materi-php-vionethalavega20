@@ -38,13 +38,17 @@ Route::get("/logout", [AuthController::class, 'logout']);
 
 // Route Grouping with Middleware
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['middleware' => [CekLogin::class . ':admin']], function () {
-        Route::get("/admin", [AdminController::class, 'index']);
+    Route::get("/admin", [AdminController::class, 'index'])
+        ->middleware(CekLogin::class.':admin');
+    Route::get("/user", [UserController::class, 'index'])
+        ->middleware(CekLogin::class.':user');
+
+    Route::prefix('admin')->group(function(){
         Route::resource('prodi', ProdiController::class);
         Route::resource('fakultas', FakultasController::class);
-    });
+    })->middleware(CekLogin::class.':admin');
 
-    Route::group(['middleware' => [CekLogin::class . ':user']], function () {
-        Route::get("/user", [UserController::class, 'index']);
-    });
-});
+    Route::prefix('user')->group(function(){
+        Route::resource('prodi', ProdiController::class);
+    })->middleware(CekLogin::class.':user');
+});  

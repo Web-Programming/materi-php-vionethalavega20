@@ -46,7 +46,9 @@
         </div>
         </div>
         <div class="card-body">
-        <a href="{{ url('prodi/create') }}" class="btn btn-success">Buat Prodi Baru</a>
+        @can('create', App\Models\Prodi::class)
+            <a href="{{ url(auth()->user()->level.'/prodi/create') }}" class="btn btn-success" >Buat Prodi Baru</a>
+        @endcan
 
         @if (session('status'))
       <div class="alert alert-success">
@@ -61,7 +63,9 @@
             <th>Nama Prodi</th>
             <th>Kode Prodi</th>
             <th>Logo</th>
-            <th>Aksi</th>
+            @canAny(['update', 'delete', 'view'], App\Models\Prodi::class)
+              <th>Aksi</th>
+            @endcanAny
           </tr>
           </thead>
           <tbody>
@@ -77,16 +81,26 @@
         <p>Logo tidak ada</p>
         @endif
           </td>
+          @canAny(['update', 'delete', 'view'], App\Models\Prodi::class)
           <td>
-
-          <form action="{{ url('prodi/' . $prodi->id) }}" method="post">
+          <form action="{{ url(auth()->user()->level.'/prodi/'.$prodi->id) }}" method="post">
             @csrf
             @method('DELETE')
-            <a href="{{ url('prodi/' . $prodi->id) }}" class="btn btn-link">Detail</a>
-            <a href="{{ url('prodi/' . $prodi->id . '/edit') }}" class="btn btn-link">Edit</a>
+            @can('view', $prodi)
+            <a href="{{ url(auth()->user()->level.'/prodi/'.$prodi->id) }}" class="btn btn-link" >Detail</a>
+            @endcan
+
+            @can('update', $prodi)
+            <a href="{{ url(auth()->user()->level.'/prodi/'.$prodi->id.'/edit') }}" class="btn btn-link" >Edit</a>
+            @endcan
+
+            @can('delete', $prodi)
             <button type="submit" class="btn btn-link">Delete</button>
-          </form>
-          </td>
+            @endcan
+
+            </form>
+            </td>
+            @endcanAny
           </tr>
       @endforeach
           </tbody>

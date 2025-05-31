@@ -1,4 +1,4 @@
- <!--begin::Sidebar-->
+<!--begin::Sidebar-->
       <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
         <!--begin::Sidebar Brand-->
         <div class="sidebar-brand">
@@ -40,6 +40,7 @@
                
               </li>
              
+              @canAny(['viewAny', 'create'], App\Models\Prodi::class)
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-speedometer"></i>
@@ -50,19 +51,22 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="{{ url("/prodi") }}" class="nav-link">
+                      <a href="{{ url(Auth::user()->level."/prodi") }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>List Prodi</p>
                     </a>
                   </li>
+                  @can('create',App\Models\Prodi::class)
                   <li class="nav-item">
-                    <a href="{{ url("/prodi/create") }}" class="nav-link">
+                      <a href="{{ url(Auth::user()->level."/prodi/create") }}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Create Prodi</p>
                     </a>
                   </li>
+                  @endcan
                 </ul>
               </li>
+              @endcan
             </ul>
             <!--end::Sidebar Menu-->
           </nav>
